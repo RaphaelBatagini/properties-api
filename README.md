@@ -4,7 +4,7 @@ API que atende a regras de negócio pré-estabelecidas visando separar uma lista
 
 ## Instalação
 - Clone o repositório em sua máquina
-- Acessa o diretório clone e execute o seguinte comando:
+- Acesse o diretório clonado e execute o seguinte comando:
 ```
 composer install
 ```
