@@ -2,7 +2,8 @@
 
 namespace App\Controllers;
 
-class Controller {
+class Controller
+{
     public function __construct($router)
     {
         $this->router = $router;
