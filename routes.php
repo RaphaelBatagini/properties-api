@@ -12,6 +12,7 @@ $router->get('/', 'IndexController:index');
 
 $router->group('properties')->namespace("App\Controllers");
 $router->get('/', 'PropertiesController:index');
+$router->get('/{page}', 'PropertiesController:index');
 /* End of project routes */
 
 $router->dispatch();

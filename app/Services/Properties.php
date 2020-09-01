@@ -3,11 +3,17 @@
 namespace App\Services;
 
 use GuzzleHttp\Client;
+use App\Collections\PropertiesCollection;
+use App\DTO\PropertyDTO;
 
 class Properties 
 {
     const PROPERTIES_FILE = __DIR__ . '/../../assets/properties.json';
 
+    /*
+     * Get properties from source
+     * @return string
+     */
     private static function getFromSource()
     {
         $client = new Client([
@@ -18,21 +24,53 @@ class Properties
         return $response->getBody()->getContents();
     }
 
-    public static function list()
+    /*
+     * Get properties paginated
+     * @return PropertiesCollection
+     */
+    public static function list($offset = 0)
     {
-        if (
-            file_exists(self::PROPERTIES_FILE)
-            && filesize(self::PROPERTIES_FILE)
-        ) {
-            return json_decode(file_get_contents(self::PROPERTIES_FILE));
+        $properties = self::getProperties();
+        foreach ($properties as &$property) {
+            $property = new PropertyDTO($property);
+        }
+        $propertiesCollection = new PropertiesCollection($properties);
+        return $propertiesCollection->paginate($offset);
+    }
+
+    /*
+     * Get properties from internal file
+     * @return array
+     */
+    private static function getProperties()
+    {
+        if (!self::propertiesFileExists()) {
+            self::generatePropertiesFile();
         }
 
+        return json_decode(file_get_contents(self::PROPERTIES_FILE));
+    }
+
+    /*
+     * Generate file with properties
+     * @return void
+     */
+    private static function generatePropertiesFile()
+    {
         $properties_json = self::getFromSource();
         $properties_file = fopen(self::PROPERTIES_FILE, 'w')
             or die("Unable to open file!");
         fwrite($properties_file, $properties_json);
         fclose($properties_file);
-        
-        return self::list();
+    }
+
+    /*
+     * Check if properties file exists
+     * @return boolean
+     */
+    private static function propertiesFileExists()
+    {
+        return file_exists(self::PROPERTIES_FILE)
+            && filesize(self::PROPERTIES_FILE);
     }
 }
