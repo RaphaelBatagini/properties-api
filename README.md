@@ -19,3 +19,6 @@ Ao invés disso, foi escolhido utilizar somente alguns pacotes para necessidades
 
 ### Especificidades
 - Na primeira vez que este [json](http://grupozap-code-challenge.s3-website-us-east-1.amazonaws.com/sources/source-2.json) é consultado, fica armazenado na pasta assets do projeto. Nas consultas de imóveis seguintes, o sistema dará preferência ao arquivo local ao invés da fonte externa, visando performance.
+
+### Regras de negócio
+Regras de negócio definidas em [https://grupozap.github.io/cultura/challenges/engineering.html](https://grupozap.github.io/cultura/challenges/engineering.html).
