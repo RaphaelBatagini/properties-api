@@ -17,7 +17,8 @@ class ZapPropertyFilter extends PropertyFilter
 
     public function accept()
     {
-        return $this->isValidForRent() || $this->isValidForSale();
+        return parent::accept() 
+            && ($this->isValidForRent() || $this->isValidForSale());
     }
 
     private function isValidForRent()

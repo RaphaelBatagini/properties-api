@@ -4,6 +4,20 @@ namespace App\DTO;
 
 class PropertyDTO
 {
+    private $address;
+    private $bathrooms;
+    private $bedrooms;
+    private $createdAt;
+    private $id;
+    private $images;
+    private $listingStatus;
+    private $listingType;
+    private $owner;
+    private $parkingSpaces;
+    private $pricingInfos;
+    private $updatedAt;
+    private $usableAreas;
+
     public function __construct($property)
     {
         $this->address = $property->address;
