@@ -3,6 +3,7 @@
 namespace App\Iterators;
 
 use FilterIterator;
+use Iterator;
 
 class PropertyFilter extends FilterIterator
 {
@@ -16,6 +17,16 @@ class PropertyFilter extends FilterIterator
 
     const TYPE_RENTAL = 'RENTAL';
     const TYPE_SALE = 'SALE';
+
+    public function __construct(Iterator $iterator)
+    {
+        $this->boundingBoxMinimumLongitude = -46.693419;
+        $this->boundingBoxMaximumLongitude = -46.641146;
+        $this->boundingBoxMinimumLatitude = -23.568704;
+        $this->boundingBoxMaximumLatitude = -23.546686;
+
+        parent::__construct($iterator);
+    }
 
     public function accept()
     {

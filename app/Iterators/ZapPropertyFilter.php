@@ -11,10 +11,6 @@ class ZapPropertyFilter extends PropertyFilter
         $this->minimumSaleValue = 600000;
         $this->minimumRentValue = 3500;
         $this->minimumUsableAreasValue = 3500;
-        $this->boundingBoxMinimumLongitude = -46.693419;
-        $this->boundingBoxMaximumLongitude = -46.641146;
-        $this->boundingBoxMinimumLatitude = -23.568704;
-        $this->boundingBoxMaximumLatitude = -23.546686;
 
         parent::__construct($iterator);
     }

@@ -2,14 +2,17 @@
 
 namespace App\Services;
 
-use GuzzleHttp\Client;
 use App\Collections\PropertiesCollection;
 use App\DTO\PropertyDTO;
+use App\Iterators\VivaRealPropertyFilter;
 use App\Iterators\ZapPropertyFilter;
+use GuzzleHttp\Client;
 
 class Properties 
 {
     const PROPERTIES_FILE = __DIR__ . '/../../assets/properties.json';
+    const TYPE_RENTAL = 'RENTAL';
+    const TYPE_SALE = 'SALE';
 
     /*
      * Get properties from source
@@ -32,6 +35,7 @@ class Properties
     public static function list($offset = 0, $portal = null)
     {
         $properties = self::getProperties();
+
         foreach ($properties as &$property) {
             $property = new PropertyDTO($property);
         }
@@ -40,6 +44,8 @@ class Properties
 
         if ($portal === 'zap') {
             $propertiesCollection = self::filterZap($propertiesCollection);
+        } elseif ($portal === 'vivareal') {
+            $propertiesCollection = self::filterVivaReal($propertiesCollection);
         }
 
         return $propertiesCollection->paginate($offset);
@@ -52,6 +58,21 @@ class Properties
         );
 
         $propertiesArray = [];
+        foreach ($properties as $property) {
+            array_push($propertiesArray, $property);
+        }
+
+        return new PropertiesCollection($propertiesArray);
+    }
+
+    private static function filterVivaReal(PropertiesCollection $propertiesCollection)
+    {
+        $properties = new VivaRealPropertyFilter(
+            $propertiesCollection->getIterator()
+        );
+
+        $propertiesArray = [];
+
         foreach ($properties as $property) {
             array_push($propertiesArray, $property);
         }

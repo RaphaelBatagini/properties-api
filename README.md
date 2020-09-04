@@ -9,7 +9,11 @@ API que atende a regras de negócio pré-estabelecidas visando separar uma lista
 composer install
 ```
 
-## Projeto
+## Como utilizar
+Para buscar os imóveis, basta acessar a URN 
+```/properties/portal/{zap|vivareal}/{pagina}```
+
+## Sobre o Projeto
 Devido a sua simplicidade, este projeto foi criado sem utilização de um framework de mercado.
 Ao invés disso, foi escolhido utilizar somente alguns pacotes para necessidades específicas conforme os recursos listados abaixo.
 
