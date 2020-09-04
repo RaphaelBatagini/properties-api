@@ -10,7 +10,7 @@ class PropertiesController extends Controller
 {
     public function index($params)
     {
-        $page = empty($params['page']) ? 0 : $params['page']--;
+        $page = empty($params['page']) ? 0 : --$params['page'];
         $portal = empty($params['portal']) ? null : $params['portal'];
 
         $properties = Properties::list($page, $portal);

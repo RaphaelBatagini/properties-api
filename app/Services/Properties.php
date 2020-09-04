@@ -3,9 +3,10 @@
 namespace App\Services;
 
 use App\Collections\PropertiesCollection;
+use App\Collections\VivaRealPropertiesCollection;
+use App\Collections\ZapPropertiesCollection;
 use App\DTO\PropertyDTO;
-use App\Iterators\VivaRealPropertyFilter;
-use App\Iterators\ZapPropertyFilter;
+use Exception;
 use GuzzleHttp\Client;
 
 class Properties 
@@ -39,45 +40,27 @@ class Properties
         foreach ($properties as &$property) {
             $property = new PropertyDTO($property);
         }
-        
-        $propertiesCollection = new PropertiesCollection($properties);
 
-        if ($portal === 'zap') {
-            $propertiesCollection = self::filterZap($propertiesCollection);
-        } elseif ($portal === 'vivareal') {
-            $propertiesCollection = self::filterVivaReal($propertiesCollection);
-        }
+        $properties = self::getPropertiesCollection($properties, $portal);
 
-        return $propertiesCollection->paginate($offset);
+        return $properties->paginate($offset);
     }
 
-    private static function filterZap(PropertiesCollection $propertiesCollection)
-    {
-        $properties = new ZapPropertyFilter(
-            $propertiesCollection->getIterator()
-        );
+    /*
+     * Apply properties filters based on portal
+     * @return PropertiesCollection
+     */
+    private static function getPropertiesCollection($properties, $portal) {
+        $portals = [
+            'zap' => ZapPropertiesCollection::class,
+            'vivareal' => VivaRealPropertiesCollection::class,
+        ];
 
-        $propertiesArray = [];
-        foreach ($properties as $property) {
-            array_push($propertiesArray, $property);
+        if (!key_exists($portal, $portals)) {
+            return new PropertiesCollection($properties);
         }
 
-        return new PropertiesCollection($propertiesArray);
-    }
-
-    private static function filterVivaReal(PropertiesCollection $propertiesCollection)
-    {
-        $properties = new VivaRealPropertyFilter(
-            $propertiesCollection->getIterator()
-        );
-
-        $propertiesArray = [];
-
-        foreach ($properties as $property) {
-            array_push($propertiesArray, $property);
-        }
-
-        return new PropertiesCollection($propertiesArray);
+        return new $portals[$portal]($properties);
     }
 
     /*
