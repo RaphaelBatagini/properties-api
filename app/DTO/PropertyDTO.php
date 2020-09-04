@@ -21,8 +21,10 @@ class PropertyDTO
         $this->usableAreas = $property->usableAreas;
     }
 
-    function __get($prop) {
-        $prop = lcfirst($prop);
-        return $this->$prop;
+    function __call($name, $arguments) {
+        if (strpos($name, 'get') !== false) {
+            $attr = lcfirst(str_replace('get', '', $name));
+            return $this->$attr;
+        }
     }
 }

@@ -62,7 +62,11 @@ abstract class Collection implements ArrayAccess, Countable, IteratorAggregate, 
 
     public function paginate(int $offset = 0)
     {
-        return new LimitIterator($this->getIterator(), $offset * self::PAGE_LENGTH, self::PAGE_LENGTH);
+        return new LimitIterator(
+            $this->getIterator(),
+            $offset * self::PAGE_LENGTH,
+            self::PAGE_LENGTH
+        );
     }
 
     public function jsonSerialize()

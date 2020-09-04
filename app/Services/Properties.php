@@ -5,6 +5,7 @@ namespace App\Services;
 use GuzzleHttp\Client;
 use App\Collections\PropertiesCollection;
 use App\DTO\PropertyDTO;
+use App\Iterators\ZapPropertyFilter;
 
 class Properties 
 {
@@ -28,14 +29,34 @@ class Properties
      * Get properties paginated
      * @return PropertiesCollection
      */
-    public static function list($offset = 0)
+    public static function list($offset = 0, $portal = null)
     {
         $properties = self::getProperties();
         foreach ($properties as &$property) {
             $property = new PropertyDTO($property);
         }
+        
         $propertiesCollection = new PropertiesCollection($properties);
+
+        if ($portal === 'zap') {
+            $propertiesCollection = self::filterZap($propertiesCollection);
+        }
+
         return $propertiesCollection->paginate($offset);
+    }
+
+    private static function filterZap(PropertiesCollection $propertiesCollection)
+    {
+        $properties = new ZapPropertyFilter(
+            $propertiesCollection->getIterator()
+        );
+
+        $propertiesArray = [];
+        foreach ($properties as $property) {
+            array_push($propertiesArray, $property);
+        }
+
+        return new PropertiesCollection($propertiesArray);
     }
 
     /*

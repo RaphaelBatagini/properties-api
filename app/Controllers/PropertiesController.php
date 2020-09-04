@@ -10,13 +10,10 @@ class PropertiesController extends Controller
 {
     public function index($params)
     {
-        if (empty($params['page'])) {
-            $params['page'] = 0;
-        } else {
-            $params['page']--;
-        }
+        $page = empty($params['page']) ? 0 : $params['page']--;
+        $portal = empty($params['portal']) ? null : $params['portal'];
 
-        $properties = Properties::list($params['page']);
+        $properties = Properties::list($page, $portal);
 
         foreach ($properties as $key => $value) {
             echo '<pre>';
