@@ -10,11 +10,8 @@ class PropertiesCollection extends Collection
     {
         $iterator = parent::paginate($offset);
 
-        $properties = [];
-        foreach ($iterator as $property) {
-            $properties[] = $property->toArray();
-        }
-
-        return $properties;
+        return array_map(function ($item) {
+            return $item->toArraY();
+        }, iterator_to_array($iterator));
     }
 }
