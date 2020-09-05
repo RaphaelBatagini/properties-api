@@ -4,41 +4,27 @@ namespace App\DTO;
 
 class PropertyDTO
 {
-    private $address;
-    private $bathrooms;
-    private $bedrooms;
-    private $createdAt;
-    private $id;
-    private $images;
-    private $listingStatus;
-    private $listingType;
-    private $owner;
-    private $parkingSpaces;
-    private $pricingInfos;
-    private $updatedAt;
-    private $usableAreas;
+    private $property;
 
     public function __construct($property)
     {
-        $this->address = $property->address;
-        $this->bathrooms = $property->bathrooms;
-        $this->bedrooms = $property->bedrooms;
-        $this->createdAt = $property->createdAt;
-        $this->id = $property->id;
-        $this->images = $property->images;
-        $this->listingStatus = $property->listingStatus;
-        $this->listingType = $property->listingType;
-        $this->owner = $property->owner;
-        $this->parkingSpaces = $property->parkingSpaces;
-        $this->pricingInfos = $property->pricingInfos;
-        $this->updatedAt = $property->updatedAt;
-        $this->usableAreas = $property->usableAreas;
+        $this->property = (array) $property;
     }
-
+    
     function __call($name, $arguments) {
         if (strpos($name, 'get') !== false) {
             $attr = lcfirst(str_replace('get', '', $name));
-            return $this->$attr;
+            return $this->property[$attr];
         }
+    }
+
+    public function getUsableAreaValue()
+    {
+        return $this->getPricingInfos()->price / $this->getUsableAreas();
+    }
+
+    public function toArray()
+    {
+        return $this->property;
     }
 }

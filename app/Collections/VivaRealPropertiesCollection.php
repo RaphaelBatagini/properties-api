@@ -11,4 +11,9 @@ class VivaRealPropertiesCollection extends PropertiesCollection
     {
         return new VivaRealPropertyFilter(new ArrayIterator($this->items));
     }
+
+    public function count()
+    {
+        return iterator_count($this->getIterator());
+    }
 }

@@ -8,4 +8,9 @@ class Controller
     {
         $this->router = $router;
     }
+
+    protected function returnJson(array $response)
+    {
+        echo json_encode($response);die;
+    }
 }

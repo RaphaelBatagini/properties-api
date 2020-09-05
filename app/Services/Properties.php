@@ -6,7 +6,6 @@ use App\Collections\PropertiesCollection;
 use App\Collections\VivaRealPropertiesCollection;
 use App\Collections\ZapPropertiesCollection;
 use App\DTO\PropertyDTO;
-use Exception;
 use GuzzleHttp\Client;
 
 class Properties 
@@ -43,7 +42,12 @@ class Properties
 
         $properties = self::getPropertiesCollection($properties, $portal);
 
-        return $properties->paginate($offset);
+        return [
+            'pageNumber' => ++$offset,
+            'pageSize' => $properties::PAGE_LENGTH,
+            'totalCount' => $properties->count(),
+            'listings' => $properties->paginate($offset)
+        ];
     }
 
     /*

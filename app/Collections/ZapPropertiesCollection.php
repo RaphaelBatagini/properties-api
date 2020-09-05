@@ -11,4 +11,9 @@ class ZapPropertiesCollection extends PropertiesCollection
     {
         return new ZapPropertyFilter(new ArrayIterator($this->items));
     }
+
+    public function count()
+    {
+        return iterator_count($this->getIterator());
+    }
 }

@@ -6,10 +6,9 @@ use ArrayAccess;
 use ArrayIterator;
 use Countable;
 use IteratorAggregate;
-use JsonSerializable;
 use LimitIterator;
 
-abstract class Collection implements ArrayAccess, Countable, IteratorAggregate, JsonSerializable
+abstract class Collection implements ArrayAccess, Countable, IteratorAggregate
 {
     protected $items;
     protected $position;
@@ -67,10 +66,5 @@ abstract class Collection implements ArrayAccess, Countable, IteratorAggregate, 
             $offset * self::PAGE_LENGTH,
             self::PAGE_LENGTH
         );
-    }
-
-    public function jsonSerialize()
-    {
-        return json_encode($this->items, JSON_PRETTY_PRINT);
     }
 }

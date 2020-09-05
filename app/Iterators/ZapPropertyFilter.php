@@ -38,7 +38,7 @@ class ZapPropertyFilter extends PropertyFilter
 
         if (
             strpos($current->getPricingInfos()->businessType, self::TYPE_SALE) === false
-            || $current->getUsableAreas() == 0
+            || $current->getUsableAreas() === 0
         ) {
             return false;
         }
@@ -50,9 +50,8 @@ class ZapPropertyFilter extends PropertyFilter
         }
 
         $validPrice = $current->getPricingInfos()->price >= $minimumValue;
-        
-        $usableAreaValue = $current->getPricingInfos()->price / $current->getUsableAreas();
-        $validUsableAreas = $usableAreaValue > $this->minimumUsableAreasValue;
+
+        $validUsableAreas = $current->getUsableAreaValue() > $this->minimumUsableAreasValue;
         
         return $validPrice && $validUsableAreas;
     }

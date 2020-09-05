@@ -12,13 +12,6 @@ class PropertiesController extends Controller
     {
         $page = empty($params['page']) ? 0 : --$params['page'];
         $portal = empty($params['portal']) ? null : $params['portal'];
-
-        $properties = Properties::list($page, $portal);
-
-        foreach ($properties as $key => $value) {
-            echo '<pre>';
-            var_dump($key, $value);
-            echo '</pre>';
-        }
+        $this->returnJson(Properties::list($page, $portal));
     }
 }
