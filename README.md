@@ -13,6 +13,13 @@ composer install
 ```
 - Garanta permissão de escrita e leitura na pasta **assets**
 
+## Executando testes
+- Todos os testes do projeto se encontram na pasta **tests** na raiz do projeto
+- Para executar os testes, na raiz do projeto, utilize o seguinte comando:
+```
+./vendor/bin/phpunit tests
+```
+
 ## Como utilizar
 Para buscar os imóveis, basta acessar a URN 
 ```/properties/portal/{zap|vivareal}/{pagina}```
