@@ -6,6 +6,7 @@ use PHPUnit\Framework\TestCase;
 final class PropertyDTOTest extends TestCase
 {
     protected $property;
+    protected $propertyDto;
 
     protected function setUp(): void
     {
@@ -34,11 +35,17 @@ final class PropertyDTOTest extends TestCase
         $property->pricingInfos->businessType = 'SALE';
         $property->pricingInfos->monthlyCondoFee = 0;
 
-        $this->property = new PropertyDTO($property);
+        $this->property = $property;
+        $this->propertyDto = new PropertyDTO($property);
     }
 
     public function testCanCalcUsableAreaValue(): void
     {
-        $this->assertEquals($this->property->getUsableAreaValue(), 3942.86);
+        $this->assertEquals(3942.86, $this->propertyDto->getUsableAreaValue());
+    }
+
+    public function testShouldReturnArray(): void
+    {
+        $this->assertEquals((array) $this->property, $this->propertyDto->toArray());
     }
 }

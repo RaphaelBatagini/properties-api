@@ -20,7 +20,7 @@ class PropertyDTO
 
     public function getUsableAreaValue()
     {
-        $usableAreaValue = $this->getPricingInfos()->price / $this->getUsableAreaValue();
+        $usableAreaValue = $this->getPricingInfos()->price / $this->getUsableAreas();
         return round($usableAreaValue, 2);
     }
 
