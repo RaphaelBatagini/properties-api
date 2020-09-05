@@ -2,12 +2,16 @@
 
 API que atende a regras de negócio pré-estabelecidas visando separar uma lista de imóveis entre os elegíveis para o Zap e Viva Real.
 
+## Requisitos
+- PHP >= 7.2
+
 ## Instalação
 - Clone o repositório em sua máquina
 - Acesse o diretório clonado e execute o seguinte comando:
 ```
 composer install
 ```
+- Garanta permissão de escrita e leitura na pasta **assets**
 
 ## Como utilizar
 Para buscar os imóveis, basta acessar a URN 

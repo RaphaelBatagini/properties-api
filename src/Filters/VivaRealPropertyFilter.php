@@ -1,6 +1,6 @@
 <?php
 
-namespace App\Iterators;
+namespace App\Filters;
 
 use Iterator;
 
