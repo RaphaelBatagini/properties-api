@@ -1,12 +1,11 @@
 <?php
 
 use App\DTO\PropertyDTO;
-use App\Filters\PropertyFilter;
 use PHPUnit\Framework\TestCase;
 
-final class PropertyFilterTest extends TestCase
+final class PropertyDTOTest extends TestCase
 {
-    protected $properties;
+    protected $property;
 
     protected function setUp(): void
     {
@@ -35,26 +34,11 @@ final class PropertyFilterTest extends TestCase
         $property->pricingInfos->businessType = 'SALE';
         $property->pricingInfos->monthlyCondoFee = 0;
 
-        $this->properties[] = new PropertyDTO($property);
+        $this->property = new PropertyDTO($property);
     }
 
-    public function testShouldRemovePropertyWithNoLatLon(): void
+    public function testCanCalcUsableAreaValue(): void
     {
-        $filter = new PropertyFilter(new ArrayIterator($this->properties));
-        $this->assertEmpty(iterator_to_array($filter));
-    }
-
-    public function testShouldKeepPropertyWithLatLon(): void
-    {
-        $location = $this->properties[0]
-            ->getAddress()
-            ->geoLocation
-            ->location;
-
-        $location->lon = -46.659002;
-        $location->lat = -23.553518;
-
-        $filter = new PropertyFilter(new ArrayIterator($this->properties));
-        $this->assertCount(1, iterator_to_array($filter));
+        $this->assertEquals($this->property->getUsableAreaValue(), 3942.86);
     }
 }

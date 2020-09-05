@@ -2,14 +2,13 @@
 
 namespace App\Collections;
 
-use ArrayIterator;
-use App\Iterators\ZapPropertyFilter;
+use App\Filters\ZapPropertyFilter;
 
 class ZapPropertiesCollection extends PropertiesCollection
 {
     public function getIterator()
     {
-        return new ZapPropertyFilter(new ArrayIterator($this->items));
+        return new ZapPropertyFilter(parent::getIterator());
     }
 
     public function count()
