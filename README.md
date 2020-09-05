@@ -1,3 +1,5 @@
+https://github.com/RaphaelBatagini/eng-zap-challenge-php/workflows/PHP%20Composer/badge.svg
+
 # Teste para o Grupo Zap
 
 API que atende a regras de negócio pré-estabelecidas visando separar uma lista de imóveis entre os elegíveis para o Zap e Viva Real.
