@@ -30,7 +30,14 @@ composer install
 
 ## Como utilizar a API
 Para buscar os imóveis, basta acessar a URN abaixo precedida pelo host que você configurou
-```/properties/portal/{zap|vivareal}/{pagina}```
+```
+/properties/portal/{zap|vivareal}/{pagina}
+```
+
+Também é possível buscar todos os imóveis, sem filtros de portais, acessando a seguinte URN:
+```
+/properties/{pagina}
+```
 
 ## Sobre o Projeto
 Devido a sua simplicidade, este projeto foi criado sem utilização de um framework de mercado.
