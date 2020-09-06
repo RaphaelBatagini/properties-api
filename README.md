@@ -41,7 +41,7 @@ Ao invés disso, foi escolhido utilizar somente alguns pacotes para necessidades
 ### Regras de negócio
 Regras de negócio definidas em [https://grupozap.github.io/cultura/challenges/engineering.html](https://grupozap.github.io/cultura/challenges/engineering.html).
 
-## Melhorias que poderiam ser implementadas com mais tempo de projeto
+## Melhorias a serem implementadas
 - Utilização do design pattern Chain of Responsabilities na definição de qual collection deve ser carregada no método getPropertiesCollection;
 - Ao invés de salvar o retorno do arquivo source-2.json no projeto e mantê-lo por tempo indefinido, verificar sempre a eTag da request para o arquivo remoto e baixá-lo novamente caso tenha sofrido alterações;
 - Cobrir métodos privados das classes com testes unitários;
