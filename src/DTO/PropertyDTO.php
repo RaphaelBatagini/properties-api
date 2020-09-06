@@ -4,6 +4,11 @@ namespace App\DTO;
 
 class PropertyDTO
 {
+    const BOUNDING_BOX_MIN_LON = -46.693419;
+    const BOUNDING_BOX_MAX_LON = -46.641146;
+    const BOUNDING_BOX_MIN_LAT = -23.568704;
+    const BOUNDING_BOX_MAX_LAT = -23.546686;
+
     private $property;
 
     public function __construct($property)
@@ -27,5 +32,17 @@ class PropertyDTO
     public function toArray()
     {
         return $this->property;
+    }
+
+    public function isInBoundBox()
+    {
+        $location = $this->getAddress()
+            ->geoLocation
+            ->location;
+
+        return $location->lon >= self::BOUNDING_BOX_MIN_LON
+            && $location->lon <= self::BOUNDING_BOX_MAX_LON
+            && $location->lat >= self::BOUNDING_BOX_MIN_LAT
+            && $location->lat <= self::BOUNDING_BOX_MAX_LAT;
     }
 }

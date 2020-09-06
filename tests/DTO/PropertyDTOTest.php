@@ -48,4 +48,69 @@ final class PropertyDTOTest extends TestCase
     {
         $this->assertEquals((array) $this->property, $this->propertyDto->toArray());
     }
+
+    public function testIsInBoundBoxTrueWhenCoordinatesAreAtRange(): void
+    {
+        $location = $this->propertyDto
+            ->getAddress()
+            ->geoLocation
+            ->location;
+
+        $location->lon = PropertyDTO::BOUNDING_BOX_MIN_LON;
+        $location->lat = PropertyDTO::BOUNDING_BOX_MIN_LAT;
+
+        $this->assertTrue($this->propertyDto->isInBoundBox());
+    }
+
+    public function testIsInBoundBoxFalseWhenLongitudeLessThanMinimum(): void
+    {
+        $location = $this->propertyDto
+            ->getAddress()
+            ->geoLocation
+            ->location;
+
+        $location->lon = PropertyDTO::BOUNDING_BOX_MIN_LON - 1;
+        $location->lat = PropertyDTO::BOUNDING_BOX_MIN_LAT;
+
+        $this->assertFalse($this->propertyDto->isInBoundBox());
+    }
+
+    public function testIsInBoundBoxFalseWhenLatitudeLessThanMinimum(): void
+    {
+        $location = $this->propertyDto
+            ->getAddress()
+            ->geoLocation
+            ->location;
+
+        $location->lon = PropertyDTO::BOUNDING_BOX_MIN_LON;
+        $location->lat = PropertyDTO::BOUNDING_BOX_MIN_LAT - 1;
+
+        $this->assertFalse($this->propertyDto->isInBoundBox());
+    }
+
+    public function testIsInBoundBoxFalseWhenLongitudeMoreThanMaximum(): void
+    {
+        $location = $this->propertyDto
+            ->getAddress()
+            ->geoLocation
+            ->location;
+
+        $location->lon = PropertyDTO::BOUNDING_BOX_MIN_LON + 1;
+        $location->lat = PropertyDTO::BOUNDING_BOX_MAX_LAT;
+
+        $this->assertFalse($this->propertyDto->isInBoundBox());
+    }
+
+    public function testIsInBoundBoxFalseWhenLatitudeMoreThanMaximum(): void
+    {
+        $location = $this->propertyDto
+            ->getAddress()
+            ->geoLocation
+            ->location;
+
+        $location->lon = PropertyDTO::BOUNDING_BOX_MIN_LON;
+        $location->lat = PropertyDTO::BOUNDING_BOX_MAX_LAT + 1;
+
+        $this->assertFalse($this->propertyDto->isInBoundBox());
+    }
 }
