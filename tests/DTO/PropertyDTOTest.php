@@ -113,4 +113,28 @@ final class PropertyDTOTest extends TestCase
 
         $this->assertFalse($this->propertyDto->isInBoundBox());
     }
+
+    public function testIsAvailableForBusinessTypeSale()
+    {
+        $this->propertyDto->getPricingInfos()->businessType = PropertyDTO::TYPE_SALE;
+
+        $this->assertTrue($this->propertyDto->isAvailableForSale());
+        $this->assertFalse($this->propertyDto->isAvailableForRent());
+    }
+
+    public function testIsAvailableForBusinessTypeRental()
+    {
+        $this->propertyDto->getPricingInfos()->businessType = PropertyDTO::TYPE_RENTAL;
+        $this->assertFalse($this->propertyDto->isAvailableForSale());
+        $this->assertTrue($this->propertyDto->isAvailableForRent());
+    }
+
+    public function testIsAvailableForBothBusinessTypes()
+    {
+        $this->propertyDto
+            ->getPricingInfos()
+            ->businessType = PropertyDTO::TYPE_RENTAL . '|' . PropertyDTO::TYPE_SALE;
+        $this->assertTrue($this->propertyDto->isAvailableForSale());
+        $this->assertTrue($this->propertyDto->isAvailableForRent());
+    }
 }
