@@ -2,18 +2,13 @@
 
 namespace App\Filters;
 
-use Iterator;
-
 class VivaRealPropertyFilter extends PropertyFilter
 {
-    public function __construct(Iterator $iterator)
-    {
-        $this->maximumSaleValue = 700000;
-        $this->maximumRentValue = 4000;
-        $this->minimumUsableAreasValue = 3500;
-
-        parent::__construct($iterator);
-    }
+    const MAX_SALE_VALUE = 700000;
+    const MAX_RENT_VALUE = 4000;
+    const MIN_USABLE_AREA_VALUE = 3500;
+    const RENT_VALUE_MULTIPLIER_FOR_IN_BOUND_BOX = 1.5;
+    const CONDO_FEE_MAX_VALUE_MULTIPLIER = 0.3;
 
     public function accept()
     {
@@ -23,38 +18,48 @@ class VivaRealPropertyFilter extends PropertyFilter
 
     private function isValidForRent()
     {
-        $pricing = $this->getInnerIterator()
-            ->current()
-            ->getPricingInfos();
+        $current = $this->getInnerIterator()->current();
+        $pricing = $current->getPricingInfos();
 
-        if (
-            !is_numeric($pricing->monthlyCondoFee) 
-            || $pricing->monthlyCondoFee == 0
-        ) {
+        if (!$this->isValidMonthlyCondoFee()) {
             return false;
         }
 
-        if ($pricing->monthlyCondoFee > ($pricing->rentalTotalPrice * 0.3)) {
-            return false;
-        }
-
-        $rentValue = $this->maximumRentValue;
-
-        if ($this->isInBoundBox()) {
-            $rentValue *= 1.5;
-        }
-
-        return strpos($pricing->businessType, self::TYPE_RENTAL) !== false 
-            && $pricing->rentalTotalPrice <= $rentValue;
+        return $current->isAvailableForRent() 
+            && $pricing->rentalTotalPrice <= $this->getMaximumRentValue();
     }
 
     private function isValidForSale()
     {
-        $pricing = $this->getInnerIterator()
-            ->current()
-            ->getPricingInfos();
+        $current = $this->getInnerIterator()
+            ->current();
 
-        return strpos($pricing->businessType, self::TYPE_SALE) !== false
-            && $pricing->price <= $this->maximumSaleValue;
+        return $current->isAvailableForSale()
+            && $current->getPricingInfos()->price <= self::MAX_SALE_VALUE;
+    }
+
+    private function getMaximumRentValue()
+    {
+        if ($this->getInnerIterator()->current()->isInBoundBox()) {
+            return self::MAX_RENT_VALUE * self::RENT_VALUE_MULTIPLIER_FOR_IN_BOUND_BOX;
+        }
+        return self::MAX_RENT_VALUE;
+    }
+
+    private function isValidMonthlyCondoFee()
+    {
+        $pricing = $this->getInnerIterator()->current()->getPricingInfos();
+        $condoFeeMaxValue = $pricing->rentalTotalPrice * 
+            self::CONDO_FEE_MAX_VALUE_MULTIPLIER;
+
+        if (
+            !is_numeric($pricing->monthlyCondoFee) 
+            || $pricing->monthlyCondoFee <= 0
+            || $pricing->monthlyCondoFee > $condoFeeMaxValue
+        ) {
+            return false;
+        }
+
+        return true;
     }
 }

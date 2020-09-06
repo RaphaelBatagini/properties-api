@@ -17,12 +17,11 @@ class ZapPropertyFilter extends PropertyFilter
 
     private function isValidForRent()
     {
-        $pricing = $this->getInnerIterator()
-            ->current()
-            ->getPricingInfos();
+        $current = $this->getInnerIterator()
+            ->current();
 
-        return strpos($pricing->businessType, self::TYPE_RENTAL) !== false 
-            && $pricing->rentalTotalPrice >= self::MIN_RENT_VALUE;
+        return $current->isAvailableForRent()
+            && $current->getPricingInfos()->rentalTotalPrice >= self::MIN_RENT_VALUE;
     }
 
     private function isValidForSale()
@@ -30,28 +29,22 @@ class ZapPropertyFilter extends PropertyFilter
         $current = $this->getInnerIterator()
             ->current();
 
-        if (
-            strpos($current->getPricingInfos()->businessType, self::TYPE_SALE) === false
-            || $current->getUsableAreas() === 0
-        ) {
+        if (!$current->isAvailableForSale() || $current->getUsableAreas() === 0) {
             return false;
         }
 
-        $minimumValue = self::MIN_SALE_VALUE;
-
-        if ($current->isInBoundBox()) {
-            $minimumValue = self::inBoundBoxMinimumSaleValue();
-        }
-
-        $validPrice = $current->getPricingInfos()->price >= $minimumValue;
+        $validPrice = $current->getPricingInfos()->price >= $this->getMinimumSaleValue();
 
         $validUsableAreas = $current->getUsableAreaValue() > self::MIN_USABLE_AREAS_VALUE;
         
         return $validPrice && $validUsableAreas;
     }
 
-    private static function inBoundBoxMinimumSaleValue()
+    private function getMinimumSaleValue()
     {
-        return self::MIN_SALE_VALUE * self::SALE_VALUE_MULTIPLIER_FOR_IN_BOUND_BOX;
+        if ($this->getInnerIterator()->current()->isInBoundBox()) {
+            return self::MIN_SALE_VALUE * self::SALE_VALUE_MULTIPLIER_FOR_IN_BOUND_BOX;
+        }
+        return self::MIN_SALE_VALUE;
     }
 }

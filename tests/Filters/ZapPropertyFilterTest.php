@@ -1,7 +1,6 @@
 <?php
 
 use App\DTO\PropertyDTO;
-use App\Filters\PropertyFilter;
 use App\Filters\ZapPropertyFilter;
 use PHPUnit\Framework\TestCase;
 
@@ -33,7 +32,7 @@ final class ZapPropertyFilterTest extends TestCase
         $property->pricingInfos = new stdClass();
         $property->pricingInfos->yearlyIptu = 60;
         $property->pricingInfos->price = 276000;
-        $property->pricingInfos->businessType = PropertyFilter::TYPE_SALE;
+        $property->pricingInfos->businessType = PropertyDTO::TYPE_SALE;
         $property->pricingInfos->monthlyCondoFee = 0;
 
         $this->properties[] = new PropertyDTO($property);
@@ -80,7 +79,7 @@ final class ZapPropertyFilterTest extends TestCase
         $pricing = $this->properties[0]
             ->getPricingInfos();
             
-        $pricing->businessType = PropertyFilter::TYPE_RENTAL;
+        $pricing->businessType = PropertyDTO::TYPE_RENTAL;
         $pricing->rentalTotalPrice = ZapPropertyFilter::MIN_RENT_VALUE;
 
         $filter = new ZapPropertyFilter(new ArrayIterator($this->properties));
@@ -92,7 +91,7 @@ final class ZapPropertyFilterTest extends TestCase
         $pricing = $this->properties[0]
             ->getPricingInfos();
             
-        $pricing->businessType = PropertyFilter::TYPE_RENTAL;
+        $pricing->businessType = PropertyDTO::TYPE_RENTAL;
         $pricing->rentalTotalPrice = ZapPropertyFilter::MIN_RENT_VALUE - 1;
 
         $filter = new ZapPropertyFilter(new ArrayIterator($this->properties));
