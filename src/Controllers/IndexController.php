@@ -11,4 +11,12 @@ class IndexController extends Controller
         echo '<h1>Grupo Zap</h1>';
         echo '<p>API que atende a regras de negócio pré-estabelecidas visando separar uma lista de imóveis entre os elegíveis para o Zap e Viva Real.</p>';
     }
+
+    public function error($params)
+    {
+        echo '<h1>Ops! Parece que algo deu errado.</h1>';
+        if (!empty($params['errcode'])) {
+            echo "<p>Error Code: {$params['errcode']}</p>";
+        }
+    }
 }

@@ -9,34 +9,39 @@ API que atende a regras de negócio pré-estabelecidas visando separar uma lista
 
 ## Instalação
 - Clone o repositório em sua máquina
-- Acesse o diretório clonado e execute o seguinte comando:
+- Faça uma copia do arquivo **.env.sample** na raiz do projeto, alterando o nome para **.env**
+- No arquivo criado, defina o host da aplicação
+- No arquivo **.htaccess** você irá encontrar as configurações para que o projeto funcione com www, https e http. Descomente os trechos conforme configuração do host em seu ambiente local ou servidor
+- Garanta permissão de escrita e leitura na pasta **assets**
+```
+chmod -R 775 assets
+```
+- Acesse o diretório clonado e instale as dependencias do composer com o seguinte comando:
 ```
 composer install
 ```
-- Garanta permissão de escrita e leitura na pasta **assets**
-- No arquivo **.htaccess** você irá encontrar as configurações para que o projeto funcione com www, https e http. Descomente os trechos conforme configuração do host em seu ambiente local ou servidor.
 
 ## Executando testes
-- Todos os testes do projeto se encontram na pasta **tests** na raiz do projeto
-- Para executar os testes, na raiz do projeto, utilize o seguinte comando:
+- Todos os testes se encontram na pasta **tests** na raiz do projeto
+- Para executar os testes, utilize o seguinte comando:
 ```
 ./vendor/bin/phpunit tests
 ```
 
-## Como utilizar
-Para buscar os imóveis, basta acessar a URN 
+## Como utilizar a API
+Para buscar os imóveis, basta acessar a URN abaixo precedida pelo host que você configurou
 ```/properties/portal/{zap|vivareal}/{pagina}```
 
 ## Sobre o Projeto
 Devido a sua simplicidade, este projeto foi criado sem utilização de um framework de mercado.
-Ao invés disso, foi escolhido utilizar somente alguns pacotes para necessidades específicas conforme os recursos listados abaixo.
+Ao invés disso, foram utilizados somente alguns pacotes para necessidades específicas.
 
-### Recursos
-- GuzzleHttp
+## Pacotes de terceiros utilizados
 - Coffeecode Router
+- PHPDotEnv
 
 ### Especificidades
-- Na primeira vez que este [json](http://grupozap-code-challenge.s3-website-us-east-1.amazonaws.com/sources/source-2.json) é consultado, fica armazenado na pasta assets do projeto. Nas consultas de imóveis seguintes, o sistema dará preferência ao arquivo local ao invés da fonte externa, visando performance.
+- Na primeira vez que o json em http://grupozap-code-challenge.s3-website-us-east-1.amazonaws.com/sources/source-2.json é consultado, fica armazenado na pasta assets do projeto. Nas consultas de imóveis seguintes, o sistema dará preferência ao arquivo local ao invés da fonte externa, visando performance.
 
 ### Regras de negócio
 Regras de negócio definidas em [https://grupozap.github.io/cultura/challenges/engineering.html](https://grupozap.github.io/cultura/challenges/engineering.html).
