@@ -6,10 +6,10 @@ use App\Collections\PropertiesCollection;
 use App\Collections\VivaRealPropertiesCollection;
 use App\Collections\ZapPropertiesCollection;
 use App\DTO\PropertyDTO;
-use GuzzleHttp\Client;
 
 class Properties 
 {
+    const REMOTE_FILE_DOMAIN = 'http://grupozap-code-challenge.s3-website-us-east-1.amazonaws.com/';
     const PROPERTIES_FILE = __DIR__ . '/../../assets/properties.json';
     const TYPE_RENTAL = 'RENTAL';
     const TYPE_SALE = 'SALE';
@@ -20,12 +20,9 @@ class Properties
      */
     private static function getFromSource()
     {
-        $client = new Client([
-            'base_uri' => 'http://grupozap-code-challenge.s3-website-us-east-1.amazonaws.com/',
-        ]);
-
-        $response = $client->request('GET', 'sources/source-2.json');
-        return $response->getBody()->getContents();
+        return file_get_contents(
+            self::REMOTE_FILE_DOMAIN . 'sources/source-2.json'
+        );
     }
 
     /*

@@ -37,7 +37,7 @@ class PropertyDTO
         return $this->property;
     }
 
-    public function isInBoundBox()
+    public function isInBoundingBox()
     {
         $location = $this->getAddress()
             ->geoLocation

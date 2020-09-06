@@ -42,7 +42,7 @@ class ZapPropertyFilter extends PropertyFilter
 
     private function getMinimumSaleValue()
     {
-        if ($this->getInnerIterator()->current()->isInBoundBox()) {
+        if ($this->getInnerIterator()->current()->isInBoundingBox()) {
             return self::MIN_SALE_VALUE * self::SALE_VALUE_MULTIPLIER_FOR_IN_BOUND_BOX;
         }
         return self::MIN_SALE_VALUE;

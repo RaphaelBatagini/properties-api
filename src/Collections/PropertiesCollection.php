@@ -11,7 +11,7 @@ class PropertiesCollection extends Collection
         $iterator = parent::paginate($offset);
 
         return array_map(function ($item) {
-            return $item->toArraY();
+            return $item->toArray();
         }, iterator_to_array($iterator));
     }
 }

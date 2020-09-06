@@ -38,7 +38,7 @@ final class ZapPropertyFilterTest extends TestCase
         $this->properties[] = new PropertyDTO($property);
     }
 
-    public function testRemoveSalePropertyWhenIsNotInBoundBoxAndPriceIsLessThanMinumum(): void
+    public function testRemoveSalePropertyWhenIsNotInBoundingBoxAndPriceIsLessThanMinumum(): void
     {
         $this->properties[0]
             ->getPricingInfos()
@@ -56,7 +56,7 @@ final class ZapPropertyFilterTest extends TestCase
         $this->assertEmpty(iterator_to_array($filter));
     }
 
-    public function testKeepSalePropertyWhenIsInBoundBoxAndPriceIsLessThanMinumum(): void
+    public function testKeepSalePropertyWhenIsInBoundingBoxAndPriceIsLessThanMinumum(): void
     {
         $this->properties[0]
             ->getPricingInfos()

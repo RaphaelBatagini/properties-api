@@ -40,7 +40,7 @@ class VivaRealPropertyFilter extends PropertyFilter
 
     private function getMaximumRentValue()
     {
-        if ($this->getInnerIterator()->current()->isInBoundBox()) {
+        if ($this->getInnerIterator()->current()->isInBoundingBox()) {
             return self::MAX_RENT_VALUE * self::RENT_VALUE_MULTIPLIER_FOR_IN_BOUND_BOX;
         }
         return self::MAX_RENT_VALUE;

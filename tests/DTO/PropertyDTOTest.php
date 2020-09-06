@@ -49,7 +49,7 @@ final class PropertyDTOTest extends TestCase
         $this->assertEquals((array) $this->property, $this->propertyDto->toArray());
     }
 
-    public function testIsInBoundBoxTrueWhenCoordinatesAreAtRange(): void
+    public function testIsInBoundingBoxTrueWhenCoordinatesAreAtRange(): void
     {
         $location = $this->propertyDto
             ->getAddress()
@@ -59,10 +59,10 @@ final class PropertyDTOTest extends TestCase
         $location->lon = PropertyDTO::BOUNDING_BOX_MIN_LON;
         $location->lat = PropertyDTO::BOUNDING_BOX_MIN_LAT;
 
-        $this->assertTrue($this->propertyDto->isInBoundBox());
+        $this->assertTrue($this->propertyDto->isInBoundingBox());
     }
 
-    public function testIsInBoundBoxFalseWhenLongitudeLessThanMinimum(): void
+    public function testIsInBoundingBoxFalseWhenLongitudeLessThanMinimum(): void
     {
         $location = $this->propertyDto
             ->getAddress()
@@ -72,10 +72,10 @@ final class PropertyDTOTest extends TestCase
         $location->lon = PropertyDTO::BOUNDING_BOX_MIN_LON - 1;
         $location->lat = PropertyDTO::BOUNDING_BOX_MIN_LAT;
 
-        $this->assertFalse($this->propertyDto->isInBoundBox());
+        $this->assertFalse($this->propertyDto->isInBoundingBox());
     }
 
-    public function testIsInBoundBoxFalseWhenLatitudeLessThanMinimum(): void
+    public function testIsInBoundingBoxFalseWhenLatitudeLessThanMinimum(): void
     {
         $location = $this->propertyDto
             ->getAddress()
@@ -85,10 +85,10 @@ final class PropertyDTOTest extends TestCase
         $location->lon = PropertyDTO::BOUNDING_BOX_MIN_LON;
         $location->lat = PropertyDTO::BOUNDING_BOX_MIN_LAT - 1;
 
-        $this->assertFalse($this->propertyDto->isInBoundBox());
+        $this->assertFalse($this->propertyDto->isInBoundingBox());
     }
 
-    public function testIsInBoundBoxFalseWhenLongitudeMoreThanMaximum(): void
+    public function testIsInBoundingBoxFalseWhenLongitudeMoreThanMaximum(): void
     {
         $location = $this->propertyDto
             ->getAddress()
@@ -98,10 +98,10 @@ final class PropertyDTOTest extends TestCase
         $location->lon = PropertyDTO::BOUNDING_BOX_MIN_LON + 1;
         $location->lat = PropertyDTO::BOUNDING_BOX_MAX_LAT;
 
-        $this->assertFalse($this->propertyDto->isInBoundBox());
+        $this->assertFalse($this->propertyDto->isInBoundingBox());
     }
 
-    public function testIsInBoundBoxFalseWhenLatitudeMoreThanMaximum(): void
+    public function testIsInBoundingBoxFalseWhenLatitudeMoreThanMaximum(): void
     {
         $location = $this->propertyDto
             ->getAddress()
@@ -111,7 +111,7 @@ final class PropertyDTOTest extends TestCase
         $location->lon = PropertyDTO::BOUNDING_BOX_MIN_LON;
         $location->lat = PropertyDTO::BOUNDING_BOX_MAX_LAT + 1;
 
-        $this->assertFalse($this->propertyDto->isInBoundBox());
+        $this->assertFalse($this->propertyDto->isInBoundingBox());
     }
 
     public function testIsAvailableForBusinessTypeSale()
