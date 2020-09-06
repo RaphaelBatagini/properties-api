@@ -1,6 +1,7 @@
 <?php
 
 use App\DTO\PropertyDTO;
+use App\Filters\PropertyFilter;
 use App\Filters\ZapPropertyFilter;
 use PHPUnit\Framework\TestCase;
 
@@ -25,20 +26,20 @@ final class ZapPropertyFilterTest extends TestCase
         $property->address->geoLocation = new stdClass();
         $property->address->geoLocation->precision = 'NO_GEOCODE';
         $property->address->geoLocation->location = new stdClass();
-        $property->address->geoLocation->location->lon = 0;
-        $property->address->geoLocation->location->lat = 0;
+        $property->address->geoLocation->location->lon = PropertyDTO::BOUNDING_BOX_MAX_LON;
+        $property->address->geoLocation->location->lat = PropertyDTO::BOUNDING_BOX_MAX_LAT;
         $property->bathrooms = 1;
         $property->bedrooms = 2;
         $property->pricingInfos = new stdClass();
         $property->pricingInfos->yearlyIptu = 60;
         $property->pricingInfos->price = 276000;
-        $property->pricingInfos->businessType = ZapPropertyFilter::TYPE_SALE;
+        $property->pricingInfos->businessType = PropertyFilter::TYPE_SALE;
         $property->pricingInfos->monthlyCondoFee = 0;
 
         $this->properties[] = new PropertyDTO($property);
     }
 
-    public function testRemovePropertyWhenIsNotInBoundBoxAndPriceIsLessThanMinumum(): void
+    public function testRemoveSalePropertyWhenIsNotInBoundBoxAndPriceIsLessThanMinumum(): void
     {
         $this->properties[0]
             ->getPricingInfos()
@@ -56,7 +57,7 @@ final class ZapPropertyFilterTest extends TestCase
         $this->assertEmpty(iterator_to_array($filter));
     }
 
-    public function testKeepPropertyWhenIsInBoundBoxAndPriceIsLessThanMinumum(): void
+    public function testKeepSalePropertyWhenIsInBoundBoxAndPriceIsLessThanMinumum(): void
     {
         $this->properties[0]
             ->getPricingInfos()
@@ -72,5 +73,29 @@ final class ZapPropertyFilterTest extends TestCase
 
         $filter = new ZapPropertyFilter(new ArrayIterator($this->properties));
         $this->assertNotEmpty(iterator_to_array($filter));
+    }
+
+    public function testKeepRentPropertyWhenValueIsMoreThanMinimum(): void
+    {
+        $pricing = $this->properties[0]
+            ->getPricingInfos();
+            
+        $pricing->businessType = PropertyFilter::TYPE_RENTAL;
+        $pricing->rentalTotalPrice = ZapPropertyFilter::MIN_RENT_VALUE;
+
+        $filter = new ZapPropertyFilter(new ArrayIterator($this->properties));
+        $this->assertNotEmpty(iterator_to_array($filter));
+    }
+
+    public function testRemoveRentPropertyWhenValueIsLessThanMinimum(): void
+    {
+        $pricing = $this->properties[0]
+            ->getPricingInfos();
+            
+        $pricing->businessType = PropertyFilter::TYPE_RENTAL;
+        $pricing->rentalTotalPrice = ZapPropertyFilter::MIN_RENT_VALUE - 1;
+
+        $filter = new ZapPropertyFilter(new ArrayIterator($this->properties));
+        $this->assertEmpty(iterator_to_array($filter));
     }
 }
