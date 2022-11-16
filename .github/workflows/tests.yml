@@ -35,3 +35,7 @@ jobs:
 
     - name: Run unit tests
       run: docker compose run tests
+      env:
+        APP_NAME: properties
+        PROJECT_URL: http://localhost
+        REMOTE_FILE_PATH: http://localhost/properties-list.json
