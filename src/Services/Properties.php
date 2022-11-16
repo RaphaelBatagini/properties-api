@@ -9,7 +9,7 @@ use App\DTO\PropertyDTO;
 
 class Properties 
 {
-    const REMOTE_FILE_DOMAIN = 'http://grupocompanytwo-code-challenge.s3-website-us-east-1.amazonaws.com/';
+    const REMOTE_FILE_PATH = $_ENV['REMOTE_FILE_PATH'];
     const PROPERTIES_FILE = __DIR__ . '/../../assets/properties.json';
     const TYPE_RENTAL = 'RENTAL';
     const TYPE_SALE = 'SALE';
@@ -20,9 +20,7 @@ class Properties
      */
     private static function getFromSource()
     {
-        return file_get_contents(
-            self::REMOTE_FILE_DOMAIN . 'sources/source-2.json'
-        );
+        return file_get_contents(self::REMOTE_FILE_PATH);
     }
 
     /*

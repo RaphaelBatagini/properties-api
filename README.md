@@ -45,13 +45,6 @@ $ docker run --rm --interactive --tty \
   composer <command>
 ```
 
-## Install
-- No arquivo **.htaccess** você irá encontrar as configurações para que o projeto funcione com www, https e http. Descomente os trechos conforme configuração do host em seu ambiente local ou servidor
-- Garanta permissão de escrita e leitura na pasta **assets**
-```
-chmod -R 775 assets
-```
-
 ## API Endpoints
 List properties of each company:
 ```
@@ -63,8 +56,8 @@ List all properties:
 /properties/{pagenumber}
 ```
 
-### Especificidades
-- Na primeira vez que o json em http://grupocompanytwo-code-challenge.s3-website-us-east-1.amazonaws.com/sources/source-2.json é consultado, fica armazenado na pasta assets do projeto. Nas consultas de imóveis seguintes, o sistema dará preferência ao arquivo local ao invés da fonte externa, visando performance.
+## Specificities
+- At the first time the json at REMOTE_FILE_PATH is consulted, a copy of its content will be stored in the application. In the nexts properties consults, the application will use the local copy instead of the remote one aiming for better performance.
 
 ## Improvements to be done:
 - Use Chain of Responsabilities design pattern to define wich collection should be loaded in the getPropertiesCollection method;

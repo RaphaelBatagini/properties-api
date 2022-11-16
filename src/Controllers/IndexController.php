@@ -8,13 +8,13 @@ class IndexController extends Controller
 {
     public function index()
     {
-        echo '<h1>Grupo CompanyTwo</h1>';
-        echo '<p>API que atende a regras de negócio pré-estabelecidas visando separar uma lista de imóveis entre os elegíveis para o CompanyTwo e Viva Real.</p>';
+        echo '<h1>Properties REST API</h1>';
+        echo '<p>API to split a list of properties between two Real State Companies (CompanyOne and Company Two) following some rules.</p>';
     }
 
     public function error($params)
     {
-        echo '<h1>Ops! Parece que algo deu errado.</h1>';
+        echo '<h1>Ops! Looks like something went wrong.</h1>';
         if (!empty($params['errcode'])) {
             echo "<p>Error Code: {$params['errcode']}</p>";
         }
