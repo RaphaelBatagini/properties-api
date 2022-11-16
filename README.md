@@ -1,16 +1,18 @@
 ![Test status](https://github.com/RaphaelBatagini/eng-zap-challenge-php/workflows/PHP%20Composer/badge.svg)
 
-# API de imóveis Grupo Zap
+# Properties API
 
-API que atende a regras de negócio pré-estabelecidas visando separar uma lista de imóveis entre os elegíveis para o Zap e Viva Real.
+API to split a list of properties between two Real State Companies following some rules.
 
-## Requisitos
-- PHP >= 7.2
+## Tech Stack
+- PHP 7.2
+- PHPUnit 8
+- Docker
+- Docker Compose
 
-## Instalação
-- Clone o repositório em sua máquina
-- Faça uma copia do arquivo **.env.sample** na raiz do projeto, alterando o nome para **.env**
-- No arquivo criado, defina o host da aplicação
+## Install
+- Clone the repository
+- Copy the content of the **.env.sample** into a new **.env** the project root folder
 - No arquivo **.htaccess** você irá encontrar as configurações para que o projeto funcione com www, https e http. Descomente os trechos conforme configuração do host em seu ambiente local ou servidor
 - Garanta permissão de escrita e leitura na pasta **assets**
 ```
