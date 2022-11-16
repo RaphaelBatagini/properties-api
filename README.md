@@ -1,6 +1,5 @@
-![Test status](https://github.com/RaphaelBatagini/properties-api/actions/workflows/tests.yml/badge.svg?branch=master)
-
 # Properties API
+![Test status](https://github.com/RaphaelBatagini/properties-api/actions/workflows/tests.yml/badge.svg?branch=master)
 
 API to split a list of properties between two Real State Companies (CompanyOne and Company Two) following some rules.
 
