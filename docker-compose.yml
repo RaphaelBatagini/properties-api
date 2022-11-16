@@ -1,14 +1,14 @@
 version: '3.5'
 services:
   config:
-    container_name: '${APP_NAME}_config'
+    container_name: 'properties_config'
     image: 'composer:2.1.5'
     volumes:
       - './:/app'
     command: composer install --ignore-platform-reqs
 
   api:
-    container_name: '${APP_NAME}_api'
+    container_name: 'properties_api'
     build: .
     ports:
       - '80:80'
@@ -19,12 +19,14 @@ services:
         condition: service_completed_successfully
 
   tests:
-    container_name: '${APP_NAME}_tests'
+    container_name: 'properties_tests'
     build: .
     volumes:
       - .:/app
     working_dir: /app
     entrypoint: vendor/bin/phpunit tests
     depends_on:
-      config:
-        condition: service_completed_successfully
+      - api
+    environment:
+      - PROJECT_URL=http://localhost
+      - REMOTE_FILE_PATH=http://api/properties-list.json
