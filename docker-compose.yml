@@ -9,7 +9,7 @@ services:
 
   api:
     container_name: '${APP_NAME}_api'
-    image: php:7.2-apache
+    build: .
     ports:
       - '80:80'
     volumes:
@@ -20,7 +20,7 @@ services:
 
   tests:
     container_name: '${APP_NAME}_tests'
-    image: php:7.2-apache
+    build: .
     volumes:
       - .:/app
     working_dir: /app

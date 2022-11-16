@@ -48,7 +48,7 @@ $ docker run --rm --interactive --tty \
 ## API Endpoints
 List properties of each company:
 ```
-/properties/portal/{companytwo|companyone}/{pagenumber}
+/properties/portal/{companyone|companytwo}/{pagenumber}
 ```
 
 List all properties:

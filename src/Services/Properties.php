@@ -9,7 +9,6 @@ use App\DTO\PropertyDTO;
 
 class Properties 
 {
-    const REMOTE_FILE_PATH = $_ENV['REMOTE_FILE_PATH'];
     const PROPERTIES_FILE = __DIR__ . '/../../assets/properties.json';
     const TYPE_RENTAL = 'RENTAL';
     const TYPE_SALE = 'SALE';
@@ -20,7 +19,7 @@ class Properties
      */
     private static function getFromSource()
     {
-        return file_get_contents(self::REMOTE_FILE_PATH);
+        return file_get_contents($_ENV['REMOTE_FILE_PATH']);
     }
 
     /*
