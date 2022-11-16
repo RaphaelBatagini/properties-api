@@ -1,4 +1,4 @@
-![Test status](https://github.com/RaphaelBatagini/eng-companytwo-challenge-php/workflows/PHP%20Composer/badge.svg)
+![Test status](https://github.com/RaphaelBatagini/properties-api/actions/workflows/tests.yml/badge.svg?branch=master)
 
 # Properties API
 
