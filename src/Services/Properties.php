@@ -3,13 +3,13 @@
 namespace App\Services;
 
 use App\Collections\PropertiesCollection;
-use App\Collections\VivaRealPropertiesCollection;
-use App\Collections\ZapPropertiesCollection;
+use App\Collections\CompanyOnePropertiesCollection;
+use App\Collections\CompanyTwoPropertiesCollection;
 use App\DTO\PropertyDTO;
 
 class Properties 
 {
-    const REMOTE_FILE_DOMAIN = 'http://grupozap-code-challenge.s3-website-us-east-1.amazonaws.com/';
+    const REMOTE_FILE_DOMAIN = 'http://grupocompanytwo-code-challenge.s3-website-us-east-1.amazonaws.com/';
     const PROPERTIES_FILE = __DIR__ . '/../../assets/properties.json';
     const TYPE_RENTAL = 'RENTAL';
     const TYPE_SALE = 'SALE';
@@ -53,8 +53,8 @@ class Properties
      */
     private static function getPropertiesCollection($properties, $portal) {
         $portals = [
-            'zap' => ZapPropertiesCollection::class,
-            'vivareal' => VivaRealPropertiesCollection::class,
+            'companytwo' => CompanyTwoPropertiesCollection::class,
+            'companyone' => CompanyOnePropertiesCollection::class,
         ];
 
         if (!key_exists($portal, $portals)) {

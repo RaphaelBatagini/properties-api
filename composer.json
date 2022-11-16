@@ -1,6 +1,6 @@
 {
-    "name": "vendor/grupo-zap",
-    "description": "Test for Grupo Zap",
+    "name": "vendor/properties-api",
+    "description": "Properties REST API",
     "type": "project",
     "authors": [
         {

@@ -1,10 +1,10 @@
 <?php
 
 use App\DTO\PropertyDTO;
-use App\Filters\ZapPropertyFilter;
+use App\Filters\CompanyTwoPropertyFilter;
 use PHPUnit\Framework\TestCase;
 
-final class ZapPropertyFilterTest extends TestCase
+final class CompanyTwoPropertyFilterTest extends TestCase
 {
     protected $properties;
 
@@ -42,7 +42,7 @@ final class ZapPropertyFilterTest extends TestCase
     {
         $this->properties[0]
             ->getPricingInfos()
-            ->price = ZapPropertyFilter::MIN_SALE_VALUE - 1;
+            ->price = CompanyTwoPropertyFilter::MIN_SALE_VALUE - 1;
         
         $location = $this->properties[0]
             ->getAddress()
@@ -52,7 +52,7 @@ final class ZapPropertyFilterTest extends TestCase
         $location->lon = PropertyDTO::BOUNDING_BOX_MAX_LON;
         $location->lat = PropertyDTO::BOUNDING_BOX_MAX_LAT - 1;
 
-        $filter = new ZapPropertyFilter(new ArrayIterator($this->properties));
+        $filter = new CompanyTwoPropertyFilter(new ArrayIterator($this->properties));
         $this->assertEmpty(iterator_to_array($filter));
     }
 
@@ -60,7 +60,7 @@ final class ZapPropertyFilterTest extends TestCase
     {
         $this->properties[0]
             ->getPricingInfos()
-            ->price = ZapPropertyFilter::MIN_SALE_VALUE - 1;
+            ->price = CompanyTwoPropertyFilter::MIN_SALE_VALUE - 1;
         
         $location = $this->properties[0]
             ->getAddress()
@@ -70,7 +70,7 @@ final class ZapPropertyFilterTest extends TestCase
         $location->lon = PropertyDTO::BOUNDING_BOX_MAX_LON;
         $location->lat = PropertyDTO::BOUNDING_BOX_MAX_LAT;
 
-        $filter = new ZapPropertyFilter(new ArrayIterator($this->properties));
+        $filter = new CompanyTwoPropertyFilter(new ArrayIterator($this->properties));
         $this->assertNotEmpty(iterator_to_array($filter));
     }
 
@@ -80,9 +80,9 @@ final class ZapPropertyFilterTest extends TestCase
             ->getPricingInfos();
             
         $pricing->businessType = PropertyDTO::TYPE_RENTAL;
-        $pricing->rentalTotalPrice = ZapPropertyFilter::MIN_RENT_VALUE;
+        $pricing->rentalTotalPrice = CompanyTwoPropertyFilter::MIN_RENT_VALUE;
 
-        $filter = new ZapPropertyFilter(new ArrayIterator($this->properties));
+        $filter = new CompanyTwoPropertyFilter(new ArrayIterator($this->properties));
         $this->assertNotEmpty(iterator_to_array($filter));
     }
 
@@ -92,9 +92,9 @@ final class ZapPropertyFilterTest extends TestCase
             ->getPricingInfos();
             
         $pricing->businessType = PropertyDTO::TYPE_RENTAL;
-        $pricing->rentalTotalPrice = ZapPropertyFilter::MIN_RENT_VALUE - 1;
+        $pricing->rentalTotalPrice = CompanyTwoPropertyFilter::MIN_RENT_VALUE - 1;
 
-        $filter = new ZapPropertyFilter(new ArrayIterator($this->properties));
+        $filter = new CompanyTwoPropertyFilter(new ArrayIterator($this->properties));
         $this->assertEmpty(iterator_to_array($filter));
     }
 }

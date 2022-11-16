@@ -8,8 +8,8 @@ class IndexController extends Controller
 {
     public function index()
     {
-        echo '<h1>Grupo Zap</h1>';
-        echo '<p>API que atende a regras de negócio pré-estabelecidas visando separar uma lista de imóveis entre os elegíveis para o Zap e Viva Real.</p>';
+        echo '<h1>Grupo CompanyTwo</h1>';
+        echo '<p>API que atende a regras de negócio pré-estabelecidas visando separar uma lista de imóveis entre os elegíveis para o CompanyTwo e Viva Real.</p>';
     }
 
     public function error($params)

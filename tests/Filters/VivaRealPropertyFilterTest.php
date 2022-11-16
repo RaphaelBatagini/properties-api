@@ -1,7 +1,7 @@
 <?php
 
 use App\DTO\PropertyDTO;
-use App\Filters\VivaRealPropertyFilter;
+use App\Filters\CompanyOnePropertyFilter;
 use PHPUnit\Framework\TestCase;
 
 final class VivaPropertyFilterTest extends TestCase
@@ -41,21 +41,21 @@ final class VivaPropertyFilterTest extends TestCase
 
     public function testShouldKeepValidRentalProperty(): void
     {
-        $filter = new VivaRealPropertyFilter(new ArrayIterator($this->properties));
+        $filter = new CompanyOnePropertyFilter(new ArrayIterator($this->properties));
         $this->assertCount(1, iterator_to_array($filter));
     }
 
     public function testShouldRemoveNonNumericCondoFeeProperty(): void
     {
         $this->properties[0]->getPricingInfos()->monthlyCondoFee = 'hello world';
-        $filter = new VivaRealPropertyFilter(new ArrayIterator($this->properties));
+        $filter = new CompanyOnePropertyFilter(new ArrayIterator($this->properties));
         $this->assertEmpty(iterator_to_array($filter));
     }
 
     public function testShouldRemovePropertyWhenCondoFeeEqualZero(): void
     {
         $this->properties[0]->getPricingInfos()->monthlyCondoFee = 0;
-        $filter = new VivaRealPropertyFilter(new ArrayIterator($this->properties));
+        $filter = new CompanyOnePropertyFilter(new ArrayIterator($this->properties));
         $this->assertEmpty(iterator_to_array($filter));
     }
 
@@ -63,8 +63,8 @@ final class VivaPropertyFilterTest extends TestCase
     {
         $pricing = $this->properties[0]->getPricingInfos();
         $pricing->monthlyCondoFee = $pricing->rentalTotalPrice * 
-            VivaRealPropertyFilter::CONDO_FEE_MAX_VALUE_MULTIPLIER + 1;
-        $filter = new VivaRealPropertyFilter(new ArrayIterator($this->properties));
+            CompanyOnePropertyFilter::CONDO_FEE_MAX_VALUE_MULTIPLIER + 1;
+        $filter = new CompanyOnePropertyFilter(new ArrayIterator($this->properties));
         $this->assertEmpty(iterator_to_array($filter));
     }
 
@@ -72,9 +72,9 @@ final class VivaPropertyFilterTest extends TestCase
     {
         $pricing = $this->properties[0]->getPricingInfos();
         $pricing->businessType = PropertyDTO::TYPE_SALE;
-        $pricing->price = VivaRealPropertyFilter::MAX_SALE_VALUE;
+        $pricing->price = CompanyOnePropertyFilter::MAX_SALE_VALUE;
 
-        $filter = new VivaRealPropertyFilter(new ArrayIterator($this->properties));
+        $filter = new CompanyOnePropertyFilter(new ArrayIterator($this->properties));
         $this->assertCount(1, iterator_to_array($filter));
     }
 
@@ -82,9 +82,9 @@ final class VivaPropertyFilterTest extends TestCase
     {
         $pricing = $this->properties[0]->getPricingInfos();
         $pricing->businessType = PropertyDTO::TYPE_SALE;
-        $pricing->price = VivaRealPropertyFilter::MAX_SALE_VALUE + 1;
+        $pricing->price = CompanyOnePropertyFilter::MAX_SALE_VALUE + 1;
 
-        $filter = new VivaRealPropertyFilter(new ArrayIterator($this->properties));
+        $filter = new CompanyOnePropertyFilter(new ArrayIterator($this->properties));
         $this->assertEmpty(iterator_to_array($filter));
     }
 }

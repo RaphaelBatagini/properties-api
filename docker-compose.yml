@@ -1,0 +1,30 @@
+version: '3.5'
+services:
+  config:
+    container_name: '${APP_NAME}_config'
+    image: 'composer:2.1.5'
+    volumes:
+      - './:/app'
+    command: composer install --ignore-platform-reqs
+
+  api:
+    container_name: '${APP_NAME}_api'
+    image: php:7.2-apache
+    ports:
+      - '80:80'
+    volumes:
+      - './:/var/www/html'
+    depends_on:
+      config:
+        condition: service_completed_successfully
+
+  tests:
+    container_name: '${APP_NAME}_tests'
+    image: php:7.2-apache
+    volumes:
+      - .:/app
+    working_dir: /app
+    entrypoint: vendor/bin/phpunit tests
+    depends_on:
+      config:
+        condition: service_completed_successfully
